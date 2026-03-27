@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Check</title>
+    <style>
+        body { font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: #f9fafb; color: #111827; }
+        .wrap { max-width: 760px; margin: 36px auto; padding: 0 16px; }
+        .card { background: #fff; border-radius: 14px; padding: 22px; box-shadow: 0 10px 25px rgba(0,0,0,.08); }
+        form { display: grid; gap: 12px; }
+        input, button { padding: 10px 12px; border-radius: 10px; border: 1px solid #d1d5db; font-size: 1rem; }
+        button { background: #0f766e; color: #fff; border: 0; cursor: pointer; }
+        .result { margin-top: 14px; padding: 10px; border-radius: 8px; background: #ecfeff; }
+        a { color: #0f766e; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="card">
+        <h1>Prime Number Check</h1>
+        <form th:action="@{/prime}" method="post">
+            <input type="number" name="number" placeholder="Enter integer" th:value="${number}">
+            <button type="submit">Check Prime</button>
+        </form>
+
+        <div class="result" th:if="${result != null}">
+            <span th:if="${result}">This is a prime number.</span>
+            <span th:unless="${result}">This is not a prime number.</span>
+        </div>
+        <p><a th:href="@{/}">Back to Home</a></p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Functions</title>
+    <style>
+        body { font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: #f9fafb; color: #111827; }
+        .wrap { max-width: 760px; margin: 36px auto; padding: 0 16px; }
+        .card { background: #fff; border-radius: 14px; padding: 22px; box-shadow: 0 10px 25px rgba(0,0,0,.08); }
+        form { display: grid; gap: 12px; }
+        input, select, button { padding: 10px 12px; border-radius: 10px; border: 1px solid #d1d5db; font-size: 1rem; }
+        button { background: #0f766e; color: #fff; border: 0; cursor: pointer; }
+        .hint { color: #6b7280; margin-top: -6px; }
+        .result { margin-top: 14px; padding: 10px; border-radius: 8px; background: #ecfeff; }
+        .error { margin-top: 14px; padding: 10px; border-radius: 8px; background: #fef2f2; color: #b91c1c; }
+        a { color: #0f766e; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="card">
+        <h1>Array Functions</h1>
+        <form th:action="@{/array}" method="post">
+            <input type="text" name="numbers" placeholder="Example: 2, 5, 7, 10" th:value="${numbers}">
+            <div class="hint">Enter comma-separated integers.</div>
+            <select name="operation" th:value="${operation}">
+                <option value="sum">Sum</option>
+                <option value="max">Maximum</option>
+                <option value="min">Minimum</option>
+                <option value="average">Average</option>
+            </select>
+            <button type="submit">Apply Function</button>
+        </form>
+
+        <div class="result" th:if="${result != null}">
+            <div>Parsed Array: <strong th:text="${parsed}"></strong></div>
+            <div>Result: <strong th:text="${result}"></strong></div>
+        </div>
+        <div class="error" th:if="${error != null}" th:text="${error}"></div>
+        <p><a th:href="@{/}">Back to Home</a></p>
+    </div>
+</div>
+</body>
+</html>

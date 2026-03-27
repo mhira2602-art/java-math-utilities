@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factorial</title>
+    <style>
+        body { font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: #f9fafb; color: #111827; }
+        .wrap { max-width: 760px; margin: 36px auto; padding: 0 16px; }
+        .card { background: #fff; border-radius: 14px; padding: 22px; box-shadow: 0 10px 25px rgba(0,0,0,.08); }
+        form { display: grid; gap: 12px; }
+        input, button { padding: 10px 12px; border-radius: 10px; border: 1px solid #d1d5db; font-size: 1rem; }
+        button { background: #0f766e; color: #fff; border: 0; cursor: pointer; }
+        .result { margin-top: 14px; padding: 10px; border-radius: 8px; background: #ecfeff; }
+        .error { margin-top: 14px; padding: 10px; border-radius: 8px; background: #fef2f2; color: #b91c1c; }
+        a { color: #0f766e; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="card">
+        <h1>Factorial</h1>
+        <form th:action="@{/factorial}" method="post">
+            <input type="number" name="number" placeholder="Enter non-negative integer" th:value="${number}">
+            <button type="submit">Find Factorial</button>
+        </form>
+
+        <div class="result" th:if="${result != null}">
+            Factorial: <strong th:text="${result}"></strong>
+        </div>
+        <div class="error" th:if="${error != null}" th:text="${error}"></div>
+        <p><a th:href="@{/}">Back to Home</a></p>
+    </div>
+</div>
+</body>
+</html>
