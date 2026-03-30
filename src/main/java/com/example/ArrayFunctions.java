@@ -1,7 +1,10 @@
 package com.example;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ArrayFunctions {
-    public static int sum(int[] array) {
+    public int sum(int[] array) {
         int total = 0;
         for (int value : array) {
             total += value;
@@ -9,7 +12,7 @@ public class ArrayFunctions {
         return total;
     }
 
-    public static int max(int[] array) {
+    public int max(int[] array) {
         int maximum = array[0];
         for (int value : array) {
             if (value > maximum) {
@@ -19,7 +22,7 @@ public class ArrayFunctions {
         return maximum;
     }
 
-    public static int min(int[] array) {
+    public int min(int[] array) {
         int minimum = array[0];
         for (int value : array) {
             if (value < minimum) {
@@ -29,7 +32,7 @@ public class ArrayFunctions {
         return minimum;
     }
 
-    public static double average(int[] array) {
+    public double average(int[] array) {
         return (double) sum(array) / array.length;
     }
 }

@@ -1,8 +1,11 @@
 package com.example;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class Factorial {
     // Recursive method to calculate factorial
-    public static long factorial(int n) {
+    public long factorial(int n) {
         if (n < 0) {
             throw new IllegalArgumentException("Factorial is not defined for negative numbers.");
         }
@@ -11,6 +14,4 @@ public class Factorial {
         }
         return n * factorial(n - 1);
     }
-
-
 }

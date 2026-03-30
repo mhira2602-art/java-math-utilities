@@ -1,6 +1,7 @@
 package com.example;
 
 import java.util.Arrays;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PracticeController {
-    private final Calculator calculator = new Calculator();
+    private final PracticeService practiceService;
+
+    @Autowired
+    public PracticeController(PracticeService practiceService) {
+        this.practiceService = practiceService;
+    }
 
     @GetMapping("/")
     public String home() {
@@ -33,13 +39,7 @@ public class PracticeController {
         model.addAttribute("operation", operation);
 
         try {
-            double result = switch (operation) {
-                case "add" -> calculator.add(a, b);
-                case "subtract" -> calculator.subtract(a, b);
-                case "multiply" -> calculator.multiply(a, b);
-                case "divide" -> calculator.divide(a, b);
-                default -> throw new IllegalArgumentException("Unknown operation selected.");
-            };
+            double result = practiceService.calculate(a, b, operation);
             model.addAttribute("result", result);
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
@@ -61,7 +61,7 @@ public class PracticeController {
         model.addAttribute("number", number);
 
         try {
-            long result = Factorial.factorial(number);
+            long result = practiceService.factorial(number);
             model.addAttribute("result", result);
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
@@ -81,7 +81,7 @@ public class PracticeController {
         Model model
     ) {
         model.addAttribute("number", number);
-        model.addAttribute("result", PrimeNumber.isPrime(number));
+        model.addAttribute("result", practiceService.isPrime(number));
         return "prime";
     }
 
@@ -100,45 +100,13 @@ public class PracticeController {
         model.addAttribute("operation", operation);
 
         try {
-            int[] values = parseArray(numbers);
-            model.addAttribute("parsed", Arrays.toString(values));
-
-            Object result = switch (operation) {
-                case "sum" -> ArrayFunctions.sum(values);
-                case "max" -> ArrayFunctions.max(values);
-                case "min" -> ArrayFunctions.min(values);
-                case "average" -> ArrayFunctions.average(values);
-                default -> throw new IllegalArgumentException("Unknown array operation selected.");
-            };
-            model.addAttribute("result", result);
+            PracticeService.ArrayOperationResult arrayResult = practiceService.executeArrayOperation(numbers, operation);
+            model.addAttribute("parsed", Arrays.toString(arrayResult.values()));
+            model.addAttribute("result", arrayResult.result());
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
         }
 
         return "array";
-    }
-
-    private int[] parseArray(String numbers) {
-        if (numbers == null || numbers.trim().isEmpty()) {
-            throw new IllegalArgumentException("Please enter at least one number.");
-        }
-
-        String[] tokens = numbers.split(",");
-        int[] values = new int[tokens.length];
-
-        for (int i = 0; i < tokens.length; i++) {
-            String token = tokens[i].trim();
-            if (token.isEmpty()) {
-                throw new IllegalArgumentException("Invalid list. Use comma-separated integers like 2, 4, 6");
-            }
-
-            try {
-                values[i] = Integer.parseInt(token);
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid number: " + token);
-            }
-        }
-
-        return values;
     }
 }

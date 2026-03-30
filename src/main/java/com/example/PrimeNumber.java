@@ -1,7 +1,10 @@
 package com.example;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class PrimeNumber {
-    public static boolean isPrime(int n) {
+    public boolean isPrime(int n) {
         if (n <= 1) {
             return false;
         }
